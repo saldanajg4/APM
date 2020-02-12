@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { ProductCategoryService } from './product-categories/product-category.service';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ProductCategoryService } from './product-categories/product-category.se
   declarations: [
     AppComponent,
     WelcomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MapComponent
   ],
   providers: [ProductCategoryService],
   bootstrap: [AppComponent]

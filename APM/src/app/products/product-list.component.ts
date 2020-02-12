@@ -4,7 +4,7 @@ import { Subscription, Observable, EMPTY, BehaviorSubject, combineLatest } from 
 
 import { Product } from './product';
 import { ProductService } from './product.service';
-import { catchError, filter, map } from 'rxjs/operators';
+import { catchError, filter, map, tap } from 'rxjs/operators';
 import { ProductCategoryService } from '../product-categories/product-category.service';
 import { ProductCategory } from '../product-categories/product-category';
 
@@ -26,10 +26,12 @@ export class ProductListComponent implements OnDestroy {
     this.categorySelectedAction$
   ])
     .pipe(
+      tap(val => console.log('the value of products: ' + val)),
       map(([products, selectedCategoryId]) =>
         products.filter(product => 
             selectedCategoryId ? product.categoryId === selectedCategoryId : true
           )),
+          tap(val => console.log('the value of products: ' + val)),
           catchError(err => {
             this.errorMessage = err;
             return EMPTY;

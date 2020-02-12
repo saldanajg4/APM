@@ -3,11 +3,13 @@ import { RouterModule } from '@angular/router';
 
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
+      { path: 'map', component: MapComponent},
       {
         path: 'products',
         loadChildren: () =>
