@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf'; 
 
+
 @Component({
   selector: 'pm-map',
   templateUrl: './map.component.html',
@@ -15,6 +16,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   markers
   map
   mapOptions
+  staticMapUrl
   // google
   constructor() { }
 
@@ -56,22 +58,22 @@ export class MapComponent implements OnInit, AfterViewInit {
 //{lat: 31.917817, lng: -102.225537}
    LoadMap() {
     this.mapOptions = {
-        center: new google.maps.LatLng(31.917817, 7-102.225537),
-        // center: new google.maps.LatLng(19.0883595, 72.82652380000002),
+        // center: new google.maps.LatLng(31.917817, 7-102.225537),
+        center: new google.maps.LatLng(19.0883595, 72.82652380000002),
         zoom: 10,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     this.map = new google.maps.Map(document.getElementById("dvMap"), this.mapOptions);
 
-    // for (var i = 0; i < this.markers.length; i++) {
-    //     var data = this.markers[i];
-    //     var myLatlng = new google.maps.LatLng(data.lat, data.lng);
-    //     var marker = new google.maps.Marker({
-    //         position: myLatlng,
-    //         map: this.map,
-    //         title: data.title
-    //     });
-    // }
+    for (var i = 0; i < this.markers.length; i++) {
+        var data = this.markers[i];
+        var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: this.map,
+            title: data.title
+        });
+    }
 //     var polyline = new google.maps.Polyline(new PolylineOptions()
 //      .add(new LatLng(51.5, -0.1), new LatLng(40.7, -74.0))
 //      .width(5)
@@ -80,28 +82,28 @@ export class MapComponent implements OnInit, AfterViewInit {
 
 Export() {
   //URL of Google Static Maps.
-  var staticMapUrl = "https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyDjQSgkLa0HgwS6EDih_JgXGVbGhe2aEq8";
+   this.staticMapUrl = "https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyDjQSgkLa0HgwS6EDih_JgXGVbGhe2aEq8";
 
   //Set the Google Map Center.
-  staticMapUrl += "&center=" + this.mapOptions.center.lat() + "," + this.mapOptions.center.lng();
+  this.staticMapUrl += "&center=" + this.mapOptions.center.lat() + "," + this.mapOptions.center.lng();
 
   //Set the Google Map Size.
-  staticMapUrl += "&size=220x350";
+  this.staticMapUrl += "&size=220x350";
 
   //Set the Google Map Zoom.
-  staticMapUrl += "&zoom=" + this.mapOptions.zoom;
+  this.staticMapUrl += "&zoom=" + this.mapOptions.zoom;
 
   //Set the Google Map Type.
-  staticMapUrl += "&maptype=" + this.mapOptions.mapTypeId;
+  this.staticMapUrl += "&maptype=" + this.mapOptions.mapTypeId;
 
   //Loop and add Markers.
   for (var i = 0; i < this.markers.length; i++) {
-      staticMapUrl += "&markers=color:red|" + this.markers[i].lat + "," + this.markers[i].lng;
+    this.staticMapUrl += "&markers=color:red|" + this.markers[i].lat + "," + this.markers[i].lng;
   }
 
   //Display the Image of Google Map.
   var imgMap = document.getElementById("imgMap");
-  imgMap.src = staticMapUrl;
+  // imgMap.src = staticMapUrl;
   imgMap.style.display = "block";
 }
 
